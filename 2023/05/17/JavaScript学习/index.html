@@ -1,0 +1,624 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>JavaScript学习 | 我的博客</title><meta name="author" content="Sweet"><meta name="copyright" content="Sweet"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="目录    1 JavaScript页面类  I. 代码实现 1.1 原生DOM API的安全操作 1.2 流行框架&#x2F;库的安全操作 1.3 页面重定向 1.4 JSON解析&#x2F;动态执行 1.5 跨域通讯   II. 配置&amp;环境 2.1 敏感&#x2F;配置信息 2.2 第三方组件&#x2F;资源 2.3 纵深安全防护     2 Node.js后台类  I. 代">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript学习">
+<meta property="og:url" content="http://cxy127.online/2023/05/17/JavaScript%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="我的博客">
+<meta property="og:description" content="目录    1 JavaScript页面类  I. 代码实现 1.1 原生DOM API的安全操作 1.2 流行框架&#x2F;库的安全操作 1.3 页面重定向 1.4 JSON解析&#x2F;动态执行 1.5 跨域通讯   II. 配置&amp;环境 2.1 敏感&#x2F;配置信息 2.2 第三方组件&#x2F;资源 2.3 纵深安全防护     2 Node.js后台类  I. 代">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://cxy127.online/img/default.png">
+<meta property="article:published_time" content="2023-05-17T12:40:53.000Z">
+<meta property="article:modified_time" content="2023-05-17T12:42:57.202Z">
+<meta property="article:author" content="Sweet">
+<meta property="article:tag" content="Web前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://cxy127.online/img/default.png"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="http://cxy127.online/2023/05/17/JavaScript%E5%AD%A6%E4%B9%A0/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'JavaScript学习',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-05-17 20:42:57'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/background.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/loading.gif" data-original="/img/people-image.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/default.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">我的博客</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">JavaScript学习</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-05-17T12:40:53.000Z" title="发表于 2023-05-17 20:40:53">2023-05-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-05-17T12:42:57.202Z" title="更新于 2023-05-17 20:42:57">2023-05-17</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/web%E5%AD%A6%E4%B9%A0/">web学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="JavaScript学习"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><!-- markdown="1" is required for GitHub Pages to render the TOC properly. -->
+
+<details markdown="1">
+  <summary>目录</summary>
+
+
+<ul>
+<li><p><a href="#1">1 JavaScript页面类</a></p>
+<ul>
+<li><a href="#1.1">I. 代码实现</a><ul>
+<li><a href="#1.1.1">1.1 原生DOM API的安全操作</a></li>
+<li><a href="#1.1.2">1.2 流行框架&#x2F;库的安全操作</a></li>
+<li><a href="#1.1.3">1.3 页面重定向</a></li>
+<li><a href="#1.1.4">1.4 JSON解析&#x2F;动态执行</a></li>
+<li><a href="#1.1.5">1.5 跨域通讯</a></li>
+</ul>
+</li>
+<li><a href="#1.2">II. 配置&amp;环境</a><ul>
+<li><a href="#1.2.1">2.1 敏感&#x2F;配置信息</a></li>
+<li><a href="#1.2.2">2.2 第三方组件&#x2F;资源</a></li>
+<li><a href="#1.2.3">2.3 纵深安全防护</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a href="#2">2 Node.js后台类</a></p>
+<ul>
+<li><a href="#2.1">I. 代码实现</a><ul>
+<li><a href="#2.1.1">1.1 输入验证</a></li>
+<li><a href="#2.1.2">1.2 执行命令</a></li>
+<li><a href="#2.1.3">1.3 文件操作</a></li>
+<li><a href="#2.1.4">1.4 网络请求</a></li>
+<li><a href="#2.1.5">1.5 数据输出</a></li>
+<li><a href="#2.1.6">1.6 响应输出</a></li>
+<li><a href="#2.1.7">1.7 执行代码</a></li>
+<li><a href="#2.1.8">1.8 Web跨域</a></li>
+<li><a href="#2.1.9">1.9 SQL操作</a></li>
+<li><a href="#2.1.10">1.10 NoSQL操作</a></li>
+<li><a href="#2.1.11">1.11 服务器端渲染（SSR）</a></li>
+<li><a href="#2.1.12">1.12 URL跳转</a></li>
+<li><a href="#2.1.13">1.13 Cookie与登录态</a></li>
+</ul>
+</li>
+<li><a href="#2.2">II. 配置&amp;环境</a><ul>
+<li><a href="#2.2.1">2.1 敏感&#x2F;配置信息</a></li>
+<li><a href="#2.2.2">2.2 第三方组件&#x2F;资源</a></li>
+<li><a href="#2.2.3">2.3 纵深安全防护</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</details>
+
+<p><a id="1"></a></p>
+<h2 id="JavaScript页面类"><a href="#JavaScript页面类" class="headerlink" title="JavaScript页面类"></a>JavaScript页面类</h2><p><a id="1.1"></a></p>
+<h3 id="I-代码实现"><a href="#I-代码实现" class="headerlink" title="I. 代码实现"></a>I. 代码实现</h3><p><a id="1.1.1"></a></p>
+<h4 id="1-1-原生DOM-API的安全操作"><a href="#1-1-原生DOM-API的安全操作" class="headerlink" title="1.1 原生DOM API的安全操作"></a>1.1 原生DOM API的安全操作</h4><p><strong>1.1.1【必须】HTML标签操作，限定&#x2F;过滤传入变量值</strong></p>
+<ul>
+<li>使用<code>innerHTML=</code>、<code>outerHTML=</code>、<code>document.write()</code>、<code>document.writeln()</code>时，如变量值外部可控，应对特殊字符（<code>&amp;, &lt;, &gt;, &quot;, &#39;</code>）做编码转义，或使用安全的DOM API替代，包括：<code>innerText=</code></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 假设 params 为用户输入， text 为 DOM 节点</span></span><br><span class="line"><span class="comment">// bad：将不可信内容带入HTML标签操作</span></span><br><span class="line"><span class="keyword">const</span> &#123; user &#125; = params;</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">text.<span class="property">innerHTML</span> = <span class="string">`Follow @<span class="subst">$&#123;user&#125;</span>`</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// good: innerHTML操作前，对特殊字符编码转义</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">htmlEncode</span>(<span class="params">iStr</span>) &#123;</span><br><span class="line">	<span class="keyword">let</span> sStr = iStr;</span><br><span class="line">	sStr = sStr.<span class="title function_">replace</span>(<span class="regexp">/&amp;/g</span>, <span class="string">&quot;&amp;amp;&quot;</span>);</span><br><span class="line">	sStr = sStr.<span class="title function_">replace</span>(<span class="regexp">/&gt;/g</span>, <span class="string">&quot;&amp;gt;&quot;</span>);</span><br><span class="line">	sStr = sStr.<span class="title function_">replace</span>(<span class="regexp">/&lt;/g</span>, <span class="string">&quot;&amp;lt;&quot;</span>);</span><br><span class="line">	sStr = sStr.<span class="title function_">replace</span>(<span class="regexp">/&quot;/g</span>, <span class="string">&quot;&amp;quot;&quot;</span>);</span><br><span class="line">	sStr = sStr.<span class="title function_">replace</span>(<span class="regexp">/&#x27;/g</span>, <span class="string">&quot;&amp;#39;&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> sStr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123; user &#125; = params;</span><br><span class="line">user = <span class="title function_">htmlEncode</span>(user);</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">text.<span class="property">innerHTML</span> = <span class="string">`Follow @<span class="subst">$&#123;user&#125;</span>`</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// good: 使用安全的DOM API替代innerHTML</span></span><br><span class="line"><span class="keyword">const</span> &#123; user &#125; = params;</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">text.<span class="property">innerText</span> = <span class="string">`Follow @<span class="subst">$&#123;user&#125;</span>`</span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>1.1.2【必须】HTML属性操作，限定&#x2F;过滤传入变量值</strong></p>
+<ul>
+<li><p>使用<code>element.setAttribute(name, value);</code>时，如第一个参数值<code>name</code>外部可控，应用白名单限定允许操作的属性范围。</p>
+</li>
+<li><p>使用<code>element.setAttribute(name, value);</code>时，操作<code>a.href</code>、<code>ifame.src</code>、<code>form.action</code>、<code>embed.src</code>、<code>object.data</code>、<code>link.href</code>、<code>area.href</code>、<code>input.formaction</code>、<code>button.formaction</code>属性时，如第二个参数值<code>value</code>外部可控，应参考<em>JavaScript页面类规范1.3.1</em>部分，限定页面重定向或引入资源的目标地址。</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// good: setAttribute操作前，限定引入资源的目标地址</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">addExternalCss</span>(<span class="params">e</span>) &#123;</span><br><span class="line">	<span class="keyword">const</span> t = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;link&#x27;</span>);</span><br><span class="line">	t.<span class="title function_">setAttribute</span>(<span class="string">&#x27;href&#x27;</span>, e),</span><br><span class="line">	t.<span class="title function_">setAttribute</span>(<span class="string">&#x27;rel&#x27;</span>, <span class="string">&#x27;stylesheet&#x27;</span>),</span><br><span class="line">	t.<span class="title function_">setAttribute</span>(<span class="string">&#x27;type&#x27;</span>, <span class="string">&#x27;text/css&#x27;</span>),</span><br><span class="line">	<span class="variable language_">document</span>.<span class="property">head</span>.<span class="title function_">appendChild</span>(t)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">validURL</span>(<span class="params">sUrl</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> !!((<span class="regexp">/^(https?:\/\/)?[\w\-.]+\.(qq|tencent)\.com($|\/|\\)/i</span>).<span class="title function_">test</span>(sUrl) || (<span class="regexp">/^[\w][\w/.\-_%]+$/i</span>).<span class="title function_">test</span>(sUrl) || (<span class="regexp">/^[/\\][^/\\]/i</span>).<span class="title function_">test</span>(sUrl));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> sUrl = <span class="string">&quot;https://evil.com/1.css&quot;</span></span><br><span class="line"><span class="keyword">if</span> (<span class="title function_">validURL</span>(sUrl)) &#123;</span><br><span class="line">	<span class="title function_">addExternalCss</span>(sUrl);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a id="1.1.2"></a></p>
+<h4 id="1-2-流行框架-x2F-库的安全操作"><a href="#1-2-流行框架-x2F-库的安全操作" class="headerlink" title="1.2 流行框架&#x2F;库的安全操作"></a>1.2 流行框架&#x2F;库的安全操作</h4><p><strong>1.2.1【必须】限定&#x2F;过滤传入jQuery不安全函数的变量值</strong></p>
+<ul>
+<li>使用<code>.html()</code>、<code>.append()</code>、<code>.prepend()</code>、<code>.wrap()</code>、<code>.replaceWith()</code>、<code>.wrapAll()</code>、<code>.wrapInner()</code>、<code>.after()</code>、<code>.before()</code>时，如变量值外部可控，应对特殊字符（<code>&amp;, &lt;, &gt;, &quot;, &#39;</code>）做编码转义。</li>
+<li>引入<code>jQuery 1.x（等于或低于1.12）、jQuery2.x（等于或低于2.2）</code>，且使用<code>$()</code>时，应优先考虑替换为最新版本。如一定需要使用，应对传入参数值中的特殊字符（<code>&amp;, &lt;, &gt;, &quot;, &#39;</code>）做编码转义。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad：将不可信内容，带入jQuery不安全函数.after()操作</span></span><br><span class="line"><span class="keyword">const</span> &#123; user &#125; = params;</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">$(<span class="string">&quot;p&quot;</span>).<span class="title function_">after</span>(user);</span><br><span class="line"></span><br><span class="line"><span class="comment">// good: jQuery不安全函数.html()操作前，对特殊字符编码转义</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">htmlEncode</span>(<span class="params">iStr</span>) &#123;</span><br><span class="line">	<span class="keyword">let</span> sStr = iStr;</span><br><span class="line">	sStr = sStr.<span class="title function_">replace</span>(<span class="regexp">/&amp;/g</span>, <span class="string">&quot;&amp;amp;&quot;</span>);</span><br><span class="line">	sStr = sStr.<span class="title function_">replace</span>(<span class="regexp">/&gt;/g</span>, <span class="string">&quot;&amp;gt;&quot;</span>);</span><br><span class="line">	sStr = sStr.<span class="title function_">replace</span>(<span class="regexp">/&lt;/g</span>, <span class="string">&quot;&amp;lt;&quot;</span>);</span><br><span class="line">	sStr = sStr.<span class="title function_">replace</span>(<span class="regexp">/&quot;/g</span>, <span class="string">&quot;&amp;quot;&quot;</span>);</span><br><span class="line">	sStr = sStr.<span class="title function_">replace</span>(<span class="regexp">/&#x27;/g</span>, <span class="string">&quot;&amp;#39;&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> sStr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// const user = params.user;</span></span><br><span class="line">user = <span class="title function_">htmlEncode</span>(user);</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">$(<span class="string">&quot;p&quot;</span>).<span class="title function_">html</span>(user);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>使用<code>.attr()</code>操作<code>a.href</code>、<code>ifame.src</code>、<code>form.action</code>、<code>embed.src</code>、<code>object.data</code>、<code>link.href</code>、<code>area.href</code>、<code>input.formaction</code>、<code>button.formaction</code>属性时，应参考<em>JavaScript页面类规范1.3.1</em>部分，限定重定向的资源目标地址。</p>
+</li>
+<li><p>使用<code>.attr(attributeName, value)</code>时，如第一个参数值<code>attributeName</code>外部可控，应用白名单限定允许操作的属性范围。</p>
+</li>
+<li><p>使用<code>$.getScript(url [, success ])</code>时，如第一个参数值<code>url</code>外部可控（如：从URL取值拼接，请求jsonp接口），应限定可控变量值的字符集范围为：<code>[a-zA-Z0-9_-]+</code>。</p>
+</li>
+</ul>
+<p><strong>1.2.2【必须】限定&#x2F;过滤传入Vue.js不安全函数的变量值</strong></p>
+<ul>
+<li>使用<code>v-html</code>时，不允许对用户提供的内容使用HTML插值。如业务需要，应先对不可信内容做富文本过滤。</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">// bad：直接渲染外部传入的不可信内容</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-html</span>=<span class="string">&quot;userProvidedHtml&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">// good：使用富文本过滤库处理不可信内容后渲染</span><br><span class="line"><span class="comment">&lt;!-- 使用 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-xss-html</span>=<span class="string">&quot;&#123;&#x27;mode&#x27;: &#x27;whitelist&#x27;, dirty: html, options: options&#125;&quot;</span> &gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 配置 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">	<span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span></span><br><span class="line"><span class="language-javascript">	<span class="attr">el</span>: <span class="string">&quot;#app&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">	<span class="attr">data</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">		<span class="attr">options</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">			<span class="attr">whiteList</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">				<span class="attr">a</span>: [<span class="string">&quot;href&quot;</span>, <span class="string">&quot;title&quot;</span>, <span class="string">&quot;target&quot;</span>, <span class="string">&quot;class&quot;</span>, <span class="string">&quot;id&quot;</span>],</span></span><br><span class="line"><span class="language-javascript">				<span class="attr">div</span>: [<span class="string">&quot;class&quot;</span>, <span class="string">&quot;id&quot;</span>],</span></span><br><span class="line"><span class="language-javascript">				<span class="attr">span</span>: [<span class="string">&quot;class&quot;</span>, <span class="string">&quot;id&quot;</span>],</span></span><br><span class="line"><span class="language-javascript">				<span class="attr">img</span>: [<span class="string">&quot;src&quot;</span>, <span class="string">&quot;alt&quot;</span>],</span></span><br><span class="line"><span class="language-javascript">			&#125;,</span></span><br><span class="line"><span class="language-javascript">		&#125;,</span></span><br><span class="line"><span class="language-javascript">	&#125;,</span></span><br><span class="line"><span class="language-javascript">&#125;);</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li><p>使用<code>v-bind</code>操作<code>a.href</code>、<code>ifame.src</code>、<code>form.action</code>、<code>embed.src</code>、<code>object.data</code>、<code>link.href</code>、<code>area.href</code>、<code>input.formaction</code>、<code>button.formaction</code>时，应确保后端已参考<em>JavaScript页面类规范1.3.1</em>部分，限定了供前端调用的重定向目标地址。</p>
+</li>
+<li><p>使用<code>v-bind</code>操作<code>style</code>属性时，应只允许外部控制特定、可控的CSS属性值</p>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// bad：v-bind允许外部可控值，自定义CSS属性及数值</span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">v-bind:href</span>=<span class="string">&quot;sanitizedUrl&quot;</span> <span class="attr">v-bind:style</span>=<span class="string">&quot;userProvidedStyles&quot;</span>&gt;</span></span><br><span class="line">click me</span><br><span class="line"><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"></span><br><span class="line">// good：v-bind只允许外部提供特性、可控的CSS属性值</span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">v-bind:href</span>=<span class="string">&quot;sanitizedUrl&quot;</span> <span class="attr">v-bind:style</span>=<span class="string">&quot;&#123;</span></span></span><br><span class="line"><span class="string"><span class="tag">color: userProvidedColor,</span></span></span><br><span class="line"><span class="string"><span class="tag">background: userProvidedBackground</span></span></span><br><span class="line"><span class="string"><span class="tag">&#125;&quot;</span> &gt;</span></span><br><span class="line">click me</span><br><span class="line"><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><a id="1.1.3"></a></p>
+<h4 id="1-3-页面重定向"><a href="#1-3-页面重定向" class="headerlink" title="1.3 页面重定向"></a>1.3 页面重定向</h4><p><strong>1.3.1【必须】限定跳转目标地址</strong></p>
+<ul>
+<li><p>使用白名单，限定重定向地址的协议前缀（默认只允许HTTP、HTTPS）、域名（默认只允许公司根域），或指定为固定值；</p>
+</li>
+<li><p>适用场景包括，使用函数方法：<code>location.href</code>、<code>window.open()</code>、<code>location.assign()</code>、<code>location.replace()</code>；赋值或更新HTML属性：<code>a.href</code>、<code>ifame.src</code>、<code>form.action</code>、<code>embed.src</code>、<code>object.data</code>、<code>link.href</code>、<code>area.href</code>、<code>input.formaction</code>、<code>button.formaction</code>；</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad: 跳转至外部可控的不可信地址</span></span><br><span class="line"><span class="keyword">const</span> sTargetUrl = <span class="title function_">getURLParam</span>(<span class="string">&quot;target&quot;</span>);</span><br><span class="line">location.<span class="title function_">replace</span>(sTargetUrl);</span><br><span class="line"></span><br><span class="line"><span class="comment">// good: 白名单限定重定向地址</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">validURL</span>(<span class="params">sUrl</span>) &#123;</span><br><span class="line">	<span class="keyword">return</span> !!((<span class="regexp">/^(https?:\/\/)?[\w\-.]+\.(qq|tencent)\.com($|\/|\\)/i</span>).<span class="title function_">test</span>(sUrl) || (<span class="regexp">/^[\w][\w/.\-_%]+$/i</span>).<span class="title function_">test</span>(sUrl) || (<span class="regexp">/^[/\\][^/\\]/i</span>).<span class="title function_">test</span>(sUrl));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> sTargetUrl = <span class="title function_">getURLParam</span>(<span class="string">&quot;target&quot;</span>);</span><br><span class="line"><span class="keyword">if</span> (<span class="title function_">validURL</span>(sTargetUrl)) &#123;</span><br><span class="line">	location.<span class="title function_">replace</span>(sTargetUrl);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// good: 制定重定向地址为固定值</span></span><br><span class="line"><span class="keyword">const</span> sTargetUrl = <span class="string">&quot;http://www.qq.com&quot;</span>;</span><br><span class="line">location.<span class="title function_">replace</span>(sTargetUrl);</span><br></pre></td></tr></table></figure>
+
+<p><a id="1.1.4"></a></p>
+<h4 id="1-4-JSON解析-x2F-动态执行"><a href="#1-4-JSON解析-x2F-动态执行" class="headerlink" title="1.4 JSON解析&#x2F;动态执行"></a>1.4 JSON解析&#x2F;动态执行</h4><p><strong>1.4.1【必须】使用安全的JSON解析方式</strong></p>
+<ul>
+<li>应使用<code>JSON.parse()</code>解析JSON字符串。低版本浏览器，应使用安全的<a target="_blank" rel="noopener" href="https://github.com/douglascrockford/JSON-js/blob/master/json2.js">Polyfill封装</a></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad: 直接调用eval解析json</span></span><br><span class="line"><span class="keyword">const</span> sUserInput = <span class="title function_">getURLParam</span>(<span class="string">&quot;json_val&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> jsonstr1 = <span class="string">`&#123;&quot;name&quot;:&quot;a&quot;,&quot;company&quot;:&quot;b&quot;,&quot;value&quot;:&quot;<span class="subst">$&#123;sUserInput&#125;</span>&quot;&#125;`</span>;</span><br><span class="line"><span class="keyword">const</span> json1 = <span class="built_in">eval</span>(<span class="string">`(<span class="subst">$&#123;jsonstr1&#125;</span>)`</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// good: 使用JSON.parse解析</span></span><br><span class="line"><span class="keyword">const</span> sUserInput = <span class="title function_">getURLParam</span>(<span class="string">&quot;json_val&quot;</span>);</span><br><span class="line"><span class="title class_">JSON</span>.<span class="title function_">parse</span>(sUserInput, <span class="function">(<span class="params">k, v</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> (k === <span class="string">&quot;&quot;</span>) <span class="keyword">return</span> v;</span><br><span class="line">	<span class="keyword">return</span> v * <span class="number">2</span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// good: 低版本浏览器，使用安全的Polyfill封装（基于eval）</span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://github.com/douglascrockford/JSON-js/blob/master/json2.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span>;</span><br><span class="line"><span class="keyword">const</span> sUserInput = <span class="title function_">getURLParam</span>(<span class="string">&quot;json_val&quot;</span>);</span><br><span class="line"><span class="title class_">JSON</span>.<span class="title function_">parse</span>(sUserInput);</span><br></pre></td></tr></table></figure>
+
+<p><a id="1.1.5"></a></p>
+<h4 id="1-5-跨域通讯"><a href="#1-5-跨域通讯" class="headerlink" title="1.5 跨域通讯"></a>1.5 跨域通讯</h4><p><strong>1.5.1【必须】使用安全的前端跨域通信方式</strong></p>
+<ul>
+<li>具有隔离登录态（如：p_skey）、涉及用户高敏感信息的业务（如：微信网页版、QQ空间、QQ邮箱、公众平台），禁止通过<code>document.domain</code>降域，实现前端跨域通讯，应使用postMessage替代。</li>
+</ul>
+<p><strong>1.5.2【必须】使用postMessage应限定Origin</strong></p>
+<ul>
+<li><p>在message事件监听回调中，应先使用<code>event.origin</code>校验来源，再执行具体操作。</p>
+</li>
+<li><p>校验来源时，应使用<code>===</code>判断，禁止使用<code>indexOf()</code></p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad: 使用indexOf校验Origin值</span></span><br><span class="line"><span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&quot;message&quot;</span>, <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> (~e.<span class="property">origin</span>.<span class="title function_">indexOf</span>(<span class="string">&quot;https://a.qq.com&quot;</span>)) &#123;</span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// good: 使用postMessage时，限定Origin，且使用===判断</span></span><br><span class="line"><span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&quot;message&quot;</span>, <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> (e.<span class="property">origin</span> === <span class="string">&quot;https://a.qq.com&quot;</span>) &#123;</span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><a id="1.2"></a></p>
+<h3 id="II-配置-amp-环境"><a href="#II-配置-amp-环境" class="headerlink" title="II. 配置&amp;环境"></a>II. 配置&amp;环境</h3><p><a id="1.2.1"></a></p>
+<h4 id="2-1-敏感-x2F-配置信息"><a href="#2-1-敏感-x2F-配置信息" class="headerlink" title="2.1 敏感&#x2F;配置信息"></a>2.1 敏感&#x2F;配置信息</h4><p><strong>2.1.1【必须】禁止明文硬编码AK&#x2F;SK</strong></p>
+<ul>
+<li>禁止前端页面的JS明文硬编码AK&#x2F;SK类密钥，应封装成后台接口，AK&#x2F;SK保存在后端配置中心或密钥管理系统</li>
+</ul>
+<p><a id="1.2.2"></a></p>
+<h4 id="2-2-第三方组件-x2F-资源"><a href="#2-2-第三方组件-x2F-资源" class="headerlink" title="2.2 第三方组件&#x2F;资源"></a>2.2 第三方组件&#x2F;资源</h4><p><strong>2.2.1【必须】使用可信范围内的统计组件</strong></p>
+<p><strong>2.2.2 【必须】禁止引入非可信来源的第三方JS</strong></p>
+<p><a id="1.2.3"></a></p>
+<h4 id="2-3-纵深安全防护"><a href="#2-3-纵深安全防护" class="headerlink" title="2.3 纵深安全防护"></a>2.3 纵深安全防护</h4><p><strong>2.3.1【推荐】部署CSP，并启用严格模式</strong></p>
+<p><a id="2"></a></p>
+<h2 id="Node-js后台类"><a href="#Node-js后台类" class="headerlink" title="Node.js后台类"></a>Node.js后台类</h2><p><a id="2.1"></a></p>
+<h3 id="I-代码实现-1"><a href="#I-代码实现-1" class="headerlink" title="I. 代码实现"></a>I. 代码实现</h3><p><a id="2.1.1"></a></p>
+<h4 id="1-1-输入验证"><a href="#1-1-输入验证" class="headerlink" title="1.1 输入验证"></a>1.1 输入验证</h4><p><strong>1.1.1【必须】按类型进行数据校验</strong></p>
+<ul>
+<li>所有程序外部输入的参数值，应进行数据校验。校验内容包括但不限于：数据长度、数据范围、数据类型与格式。校验不通过，应拒绝。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad：未进行输入验证</span></span><br><span class="line"><span class="title class_">Router</span>.<span class="title function_">get</span>(<span class="string">&quot;/vulxss&quot;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="keyword">const</span> &#123; txt &#125; = req.<span class="property">query</span>;</span><br><span class="line">	res.<span class="title function_">set</span>(<span class="string">&quot;Content-Type&quot;</span>, <span class="string">&quot;text/html&quot;</span>);</span><br><span class="line">	res.<span class="title function_">send</span>(&#123;</span><br><span class="line">		<span class="attr">data</span>: txt,</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// good：按数据类型，进行输入验证</span></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">Router</span> = <span class="built_in">require</span>(<span class="string">&quot;express&quot;</span>).<span class="title class_">Router</span>();</span><br><span class="line"><span class="keyword">const</span> validator = <span class="built_in">require</span>(<span class="string">&quot;validator&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="title class_">Router</span>.<span class="title function_">get</span>(<span class="string">&quot;/email_with_validator&quot;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="keyword">const</span> txt = req.<span class="property">query</span>.<span class="property">txt</span> || <span class="string">&quot;&quot;</span>;</span><br><span class="line">	<span class="keyword">if</span> (validator.<span class="title function_">isEmail</span>(txt)) &#123;</span><br><span class="line">		res.<span class="title function_">send</span>(&#123;</span><br><span class="line">			<span class="attr">data</span>: txt,</span><br><span class="line">		&#125;);</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		res.<span class="title function_">send</span>(&#123; <span class="attr">err</span>: <span class="number">1</span> &#125;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><em>关联漏洞：纵深防护措施 - 安全性增强特性</em></p>
+<p><a id="2.1.2"></a></p>
+<h4 id="1-2-执行命令"><a href="#1-2-执行命令" class="headerlink" title="1.2 执行命令"></a>1.2 执行命令</h4><p><strong>1.2.1 【必须】使用child_process执行系统命令，应限定或校验命令和参数的内容</strong></p>
+<ul>
+<li><p>适用场景包括：<code>child_process.exec</code>, <code>child_process.execSync</code>, <code>child_process.spawn</code>, <code>child_process.spawnSync</code>, <code>child_process.execFile</code>, <code>child_process.execFileSync</code></p>
+</li>
+<li><p>调用上述函数，应首先考虑限定范围，供用户选择。</p>
+</li>
+<li><p>使用<code>child_process.exec</code>或<code>child_process.execSync</code>时，如果可枚举输入的参数内容或者格式，则应限定白名单。如果无法枚举命令或参数，则必须过滤或者转义指定符号，包括：<code>|;&amp;$()&gt;&lt;`!</code></p>
+</li>
+<li><p>使用<code>child_process.spawn</code> 或<code>child_process.execFile</code>时，应校验传入的命令和参数在可控列表内。</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">Router</span> = <span class="built_in">require</span>(<span class="string">&quot;express&quot;</span>).<span class="title class_">Router</span>();</span><br><span class="line"><span class="keyword">const</span> validator = <span class="built_in">require</span>(<span class="string">&quot;validator&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> &#123; exec &#125; = <span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// bad：未限定或过滤，直接执行命令</span></span><br><span class="line"><span class="title class_">Router</span>.<span class="title function_">get</span>(<span class="string">&quot;/vul_cmd_inject&quot;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="keyword">const</span> txt = req.<span class="property">query</span>.<span class="property">txt</span> || <span class="string">&quot;echo 1&quot;</span>;</span><br><span class="line">	<span class="title function_">exec</span>(txt, <span class="function">(<span class="params">err, stdout, stderr</span>) =&gt;</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> (err) &#123; res.<span class="title function_">send</span>(&#123; <span class="attr">err</span>: <span class="number">1</span> &#125;) &#125;</span><br><span class="line">		res.<span class="title function_">send</span>(&#123;stdout, stderr&#125;);</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// good：通过白名单，限定外部可执行命令范围</span></span><br><span class="line"><span class="title class_">Router</span>.<span class="title function_">get</span>(<span class="string">&quot;/not_vul_cmd_inject&quot;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="keyword">const</span> txt = req.<span class="property">query</span>.<span class="property">txt</span> || <span class="string">&quot;echo 1&quot;</span>;</span><br><span class="line">  <span class="keyword">const</span> phone = req.<span class="property">query</span>.<span class="property">phone</span> || <span class="string">&quot;&quot;</span>;</span><br><span class="line">	<span class="keyword">const</span> cmdList = &#123;</span><br><span class="line">    	<span class="attr">sendmsg</span>: <span class="string">&quot;./sendmsg &quot;</span></span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="keyword">if</span> (txt <span class="keyword">in</span> cmdList &amp;&amp; validator.<span class="title function_">isMobilePhone</span>(phone)) &#123;</span><br><span class="line">        <span class="title function_">exec</span>(cmdList[txt] + phone, <span class="function">(<span class="params">err, stdout, stderr</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="keyword">if</span> (err) &#123; res.<span class="title function_">send</span>(&#123; <span class="attr">err</span>: <span class="number">1</span> &#125;) &#125;;</span><br><span class="line">          res.<span class="title function_">send</span>(&#123;stdout, stderr&#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		res.<span class="title function_">send</span>(&#123;</span><br><span class="line">			<span class="attr">err</span>: <span class="number">1</span>,</span><br><span class="line">			<span class="attr">tips</span>: <span class="string">`you can use &#x27;<span class="subst">$&#123;<span class="built_in">Object</span>.keys(cmdList)&#125;</span>&#x27;`</span>,</span><br><span class="line">		&#125;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// good：执行命令前，过滤/转义指定符号</span></span><br><span class="line"><span class="title class_">Router</span>.<span class="title function_">get</span>(<span class="string">&quot;/not_vul_cmd_inject&quot;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="keyword">const</span> txt = req.<span class="property">query</span>.<span class="property">txt</span> || <span class="string">&quot;echo 1&quot;</span>;</span><br><span class="line">  <span class="keyword">let</span> phone = req.<span class="property">query</span>.<span class="property">phone</span> || <span class="string">&quot;&quot;</span>;</span><br><span class="line">	<span class="keyword">const</span> cmdList = &#123;</span><br><span class="line">    	<span class="attr">sendmsg</span>: <span class="string">&quot;./sendmsg &quot;</span></span><br><span class="line">	&#125;;</span><br><span class="line">	phone = phone.<span class="title function_">replace</span>(<span class="regexp">/(\||;|&amp;|\$\(|\(|\)|&gt;|&lt;|\`|!)/gi</span>,<span class="string">&quot;&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span> (txt <span class="keyword">in</span> cmdList) &#123;</span><br><span class="line">        <span class="title function_">exec</span>(cmdList[txt] + phone, <span class="function">(<span class="params">err, stdout, stderr</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="keyword">if</span> (err) &#123; res.<span class="title function_">send</span>(&#123; <span class="attr">err</span>: <span class="number">1</span> &#125;) &#125;;</span><br><span class="line">          res.<span class="title function_">send</span>(&#123;stdout, stderr&#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		res.<span class="title function_">send</span>(&#123;</span><br><span class="line">			<span class="attr">err</span>: <span class="number">1</span>,</span><br><span class="line">			<span class="attr">tips</span>: <span class="string">`you can use &#x27;<span class="subst">$&#123;<span class="built_in">Object</span>.keys(cmdList)&#125;</span>&#x27;`</span>,</span><br><span class="line">		&#125;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><em>关联漏洞：高风险 - 任意命令执行</em></p>
+<p><a id="2.1.3"></a></p>
+<h4 id="1-3-文件操作"><a href="#1-3-文件操作" class="headerlink" title="1.3 文件操作"></a>1.3 文件操作</h4><p><strong>1.3.1 【必须】限定文件操作的后缀范围</strong></p>
+<ul>
+<li>按业务需求，使用白名单限定后缀范围。</li>
+</ul>
+<p><strong>1.3.2 【必须】校验并限定文件路径范围</strong></p>
+<ul>
+<li>应固定上传、访问文件的路径。若需要拼接外部可控变量值，检查是否包含<code>..</code>、<code>.</code>路径穿越字符。如存在，应拒绝。</li>
+<li>使用<code>fs</code>模块下的函数方法时，应对第一个参数即路径部分做校验，检查是否包含路径穿越字符<code>.</code>或<code>..</code>。涉及方法包括但不限于：<code>fs.truncate</code>、<code>fs.truncateSync</code>、<code>fs.chown</code>、<code>fs.chownSync</code>、<code>fs.lchown</code>、<code>fs.lchownSync</code>、<code>fs.stat</code>、<code>fs.lchmodSync</code>、<code>fs.lstat</code>、<code>fs.statSync</code>、<code>fs.lstatSync</code>、<code>fs.readlink</code>、<code>fs.unlink</code>、<code>fs.unlinkSync</code>、<code>fs.rmdir</code>、<code>fs.rmdirSync</code>、<code>fs.mkdir</code>、<code>fs.mkdirSync</code>、<code>fs.readdir</code>、<code>fs.readdirSync</code>、<code>fs.openSync</code>、<code>fs.open</code>、<code>fs.createReadStream</code>、<code>fs.createWriteStream</code></li>
+<li>使用express框架的<code>sendFile</code>方法时，应对第一个参数即路径部分做校验，检查是否包含路径穿越字符<code>.</code>或<code>..</code></li>
+<li>校验时，应使用<code>path</code>模块处理前的路径参数值，或判断处理过后的路径是否穿越出了当前工作目录。涉及方法包括但不限于：<code>path.resolve</code>、<code>path.join</code>、<code>path.normalize</code>等</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&quot;fs&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&quot;path&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> filename = req.<span class="property">query</span>.<span class="property">ufile</span>;</span><br><span class="line"><span class="keyword">let</span> root = <span class="string">&#x27;/data/ufile&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// bad：未检查文件名/路径</span></span><br><span class="line">fs.<span class="title function_">readFile</span>(root + filename, <span class="function">(<span class="params">err, data</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> (err) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="variable language_">console</span>.<span class="title function_">error</span>(err);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`异步读取: <span class="subst">$&#123;data.toString()&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// bad：使用path处理过后的路径参数值做校验，仍可能有路径穿越风险</span></span><br><span class="line">filename = path.<span class="title function_">join</span>(root, filename);</span><br><span class="line"><span class="keyword">if</span> (filename.<span class="title function_">indexOf</span>(<span class="string">&quot;..&quot;</span>) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">	fs.<span class="title function_">readFile</span>(filename, <span class="function">(<span class="params">err, data</span>) =&gt;</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> (err) &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="variable language_">console</span>.<span class="title function_">error</span>(err);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="variable language_">console</span>.<span class="title function_">log</span>(data.<span class="title function_">toString</span>());</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// good：检查了文件名/路径，是否包含路径穿越字符</span></span><br><span class="line"><span class="keyword">if</span> (filename.<span class="title function_">indexOf</span>(<span class="string">&quot;..&quot;</span>) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">	filename = path.<span class="title function_">join</span>(root, filename);</span><br><span class="line">	fs.<span class="title function_">readFile</span>(filename, <span class="function">(<span class="params">err, data</span>) =&gt;</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> (err) &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="variable language_">console</span>.<span class="title function_">error</span>(err);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="variable language_">console</span>.<span class="title function_">log</span>(data.<span class="title function_">toString</span>());</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>1.3.3 【必须】安全地处理上传文件名</strong></p>
+<ul>
+<li>将上传文件重命名为16位以上的随机字符串保存。</li>
+<li>如需原样保留文件名，应检查是否包含<code>..</code>、<code>.</code>路径穿越字符。如存在，应拒绝。</li>
+</ul>
+<p><strong>1.3.4 【必须】敏感资源文件，应有加密、鉴权和水印等加固措施</strong></p>
+<ul>
+<li>用户上传的<code>身份证</code>、<code>银行卡</code>等图片，属敏感资源文件，应采取安全加固。</li>
+<li>指向此类文件的URL，应保证不可预测性；同时，确保无接口会批量展示此类资源的URL。</li>
+<li>访问敏感资源文件时，应进行权限控制。默认情况下，仅用户可查看、操作自身敏感资源文件。</li>
+<li>图片类文件应添加业务水印，表明该图片仅可用于当前业务使用。</li>
+</ul>
+<p><a id="2.1.4"></a></p>
+<h4 id="1-4-网络请求"><a href="#1-4-网络请求" class="headerlink" title="1.4 网络请求"></a>1.4 网络请求</h4><p><strong>1.4.1 【必须】限定访问网络资源地址范围</strong></p>
+<ul>
+<li><p>应固定程序访问网络资源地址的<code>协议</code>、<code>域名</code>、<code>路径</code>范围。</p>
+</li>
+<li><p>若业务需要，外部可指定访问网络资源地址，应禁止访问内网私有地址段及域名。</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 以RFC定义的专有网络为例，如有自定义私有网段亦应加入禁止访问列表。</span><br><span class="line">10.0.0.0/8</span><br><span class="line">172.16.0.0/12</span><br><span class="line">192.168.0.0/16</span><br><span class="line">127.0.0.0/8</span><br></pre></td></tr></table></figure>
+
+<p><strong>1.4.2 【推荐】请求网络资源，应加密传输</strong></p>
+<ul>
+<li>应优先选用https协议请求网络资源</li>
+</ul>
+<p><em>关联漏洞：高风险 - SSRF，高风险 - HTTP劫持</em></p>
+<p><a id="2.1.5"></a></p>
+<h4 id="1-5-数据输出"><a href="#1-5-数据输出" class="headerlink" title="1.5 数据输出"></a>1.5 数据输出</h4><p><strong>1.5.1 【必须】高敏感信息禁止存储、展示</strong></p>
+<ul>
+<li>口令、密保答案、生理标识等鉴权信息禁止展示</li>
+<li>非金融类业务，信用卡cvv码及日志禁止存储</li>
+</ul>
+<p><strong>1.5.2【必须】一般敏感信息脱敏展示</strong></p>
+<ul>
+<li>身份证只显示第一位和最后一位字符，如：<code>3*********************1</code></li>
+<li>移动电话号码隐藏中间6位字符，如：<code>134***************48</code></li>
+<li>工作地址&#x2F;家庭地址最多显示到<code>区</code>一级</li>
+<li>银行卡号仅显示最后4位字符，如：<code>*********************8639</code></li>
+</ul>
+<p><strong>1.5.3 【推荐】返回的字段按业务需要输出</strong></p>
+<ul>
+<li>按需输出，避免不必要的用户信息泄露</li>
+<li>用户敏感数据应在服务器后台处理后输出，不可以先输出到客户端，再通过客户端代码来处理展示</li>
+</ul>
+<p><em>关联漏洞：高风险 - 用户敏感信息泄露</em></p>
+<p><a id="2.1.6"></a></p>
+<h4 id="1-6-响应输出"><a href="#1-6-响应输出" class="headerlink" title="1.6 响应输出"></a>1.6 响应输出</h4><p><strong>1.6.1 【必须】设置正确的HTTP响应包类型</strong></p>
+<ul>
+<li>响应头Content-Type与实际响应内容，应保持一致。如：API响应数据类型是json，则响应头使用<code>application/json</code>；若为xml，则设置为<code>text/xml</code>。</li>
+</ul>
+<p><strong>1.6.2 【必须】添加安全响应头</strong></p>
+<ul>
+<li>所有接口、页面，添加响应头 <code>X-Content-Type-Options: nosniff</code>。</li>
+<li>所有接口、页面，添加响应头<code>X-Frame-Options </code>。按需合理设置其允许范围，包括：<code>DENY</code>、<code>SAMEORIGIN</code>、<code>ALLOW-FROM origin</code>。用法参考：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/X-Frame-Options">MDN文档</a></li>
+<li>推荐使用组件： <a target="_blank" rel="noopener" href="https://www.npmjs.com/package/helmet">helmet</a></li>
+</ul>
+<p><strong>1.6.3 【必须】外部输入拼接到响应页面前，进行编码处理</strong></p>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>编码规则</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>输出点在HTML标签之间</td>
+<td>需要对以下6个特殊字符进行HTML实体编码(&amp;, &lt;, &gt;, “, ‘,&#x2F;)。<br>示例：<br>&amp; –&gt; &amp;amp;<br>&lt; –&gt; &amp;lt;<br>&gt;–&gt; &amp;gt;<br>“ –&gt; &amp;quot;<br>‘ –&gt; &amp;#x27;  <br>&#x2F; –&gt; &amp;#x2F;</td>
+</tr>
+<tr>
+<td>输出点在HTML标签普通属性内（如href、src、style等，on事件除外）</td>
+<td>要对数据进行HTML属性编码。<br>编码规则：除了阿拉伯数字和字母，对其他所有的字符进行编码，只要该字符的ASCII码小于256。编码后输出的格式为&amp;#xHH;(以&amp;#x开头，HH则是指该字符对应的十六进制数字，分号作为结束符)</td>
+</tr>
+<tr>
+<td>输出点在JS内的数据中</td>
+<td>需要进行js编码<br>编码规则：<br>除了阿拉伯数字和字母，对其他所有的字符进行编码，只要该字符的ASCII码小于256。编码后输出的格式为 \xHH （以 \x 开头，HH则是指该字符对应的十六进制数字）<br>Tips：这种场景仅限于外部数据拼接在js里被引号括起来的变量值中。除此之外禁止直接将代码拼接在js代码中。</td>
+</tr>
+<tr>
+<td>输出点在CSS中（Style属性）</td>
+<td>需要进行CSS编码<br>编码规则：<br>除了阿拉伯数字和字母，对其他所有的字符进行编码，只要该字符的ASCII码小于256。编码后输出的格式为 \HH （以 \ 开头，HH则是指该字符对应的十六进制数字）</td>
+</tr>
+<tr>
+<td>输出点在URL属性中</td>
+<td>对这些数据进行URL编码<br>Tips：除此之外，所有链接类属性应该校验其协议。禁止JavaScript、data和Vb伪协议。</td>
+</tr>
+</tbody></table>
+<p><strong>1.6.4 【必须】响应禁止展示物理资源、程序内部代码逻辑等敏感信息</strong></p>
+<ul>
+<li>业务生产（正式）环境，应用异常时，响应内容禁止展示敏感信息。包括但不限于：<code>物理路径</code>、<code>程序内部源代码</code>、<code>调试日志</code>、<code>内部账号名</code>、<code>内网ip地址</code>等。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// bad</span><br><span class="line">Access denied for user &#x27;xxx&#x27;@&#x27;xx.xxx.xxx.162&#x27; (using password: NO)&quot;</span><br></pre></td></tr></table></figure>
+
+<p><strong>1.6.5 【推荐】添加安全纵深防御措施</strong></p>
+<ul>
+<li>部署CSP，规则中应引入最新的严格模式特性<code>nonce-</code></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// good：使用helmet组件安全地配置响应头</span></span><br><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&quot;express&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> helmet = <span class="built_in">require</span>(<span class="string">&quot;helmet&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> app = <span class="title function_">express</span>();</span><br><span class="line">app.<span class="title function_">use</span>(<span class="title function_">helmet</span>());</span><br><span class="line"></span><br><span class="line"><span class="comment">// good：正确配置Content-Type、添加了安全响应头，引入了CSP</span></span><br><span class="line"><span class="title class_">Router</span>.<span class="title function_">get</span>(<span class="string">&quot;/&quot;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">	res.<span class="title function_">header</span>(<span class="string">&quot;Content-Type&quot;</span>, <span class="string">&quot;application/json&quot;</span>);</span><br><span class="line">	res.<span class="title function_">header</span>(<span class="string">&quot;X-Content-Type-Options&quot;</span>, <span class="string">&quot;nosniff&quot;</span>);</span><br><span class="line">	res.<span class="title function_">header</span>(<span class="string">&quot;X-Frame-Options&quot;</span>, <span class="string">&quot;SAMEORIGIN&quot;</span>);</span><br><span class="line">	res.<span class="title function_">header</span>(<span class="string">&quot;Content-Security-Policy&quot;</span>, <span class="string">&quot;script-src &#x27;self&#x27;&quot;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><em>关联漏洞：中风险 - XSS、中风险 - 跳转漏洞</em></p>
+<p><a id="2.1.7"></a></p>
+<h4 id="1-7-执行代码"><a href="#1-7-执行代码" class="headerlink" title="1.7 执行代码"></a>1.7 执行代码</h4><p><strong>1.7.1 【必须】安全的代码执行方式</strong></p>
+<ul>
+<li>禁止使用 <code>eval</code> 函数</li>
+<li>禁止使用<code>new Function(&quot;input&quot;)()</code> 来创建函数</li>
+<li>使用 <code>setInteval</code>，<code>setTimeout</code>，应校验传入的参数</li>
+</ul>
+<p><em>关联漏洞：高风险 - 代码执行漏洞</em></p>
+<p><a id="2.1.8"></a></p>
+<h4 id="1-8-Web跨域"><a href="#1-8-Web跨域" class="headerlink" title="1.8 Web跨域"></a>1.8 Web跨域</h4><p><strong>1.8.1 【必须】限定JSONP接口的callback字符集范围</strong></p>
+<ul>
+<li>JSONP接口的callback函数名为固定白名单。如callback函数名可用户自定义，应限制函数名仅包含 字母、数字和下划线。如：<code>[a-zA-Z0-9_-]+</code></li>
+</ul>
+<p><strong>1.8.2 【必须】安全的CORS配置</strong></p>
+<ul>
+<li>使用CORS，应对请求头Origin值做严格过滤、校验。具体来说，可以使用“全等于”判断，或使用严格的正则进行判断。如：<code>^https://domain\.qq\.com$</code></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// good：使用全等于，校验请求的Origin</span></span><br><span class="line"><span class="keyword">if</span> (req.<span class="property">headers</span>.<span class="property">origin</span> === <span class="string">&#x27;https://domain.qq.com&#x27;</span>) &#123;</span><br><span class="line">    res.<span class="title function_">setHeader</span>(<span class="string">&#x27;Access-Control-Allow-Origin&#x27;</span>, req.<span class="property">headers</span>.<span class="property">origin</span>);</span><br><span class="line">    res.<span class="title function_">setHeader</span>(<span class="string">&#x27;Access-Control-Allow-Credentials&#x27;</span>, <span class="literal">true</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><em>关联漏洞：中风险 - XSS，中风险 - CSRF，中风险 - CORS配置不当</em></p>
+<p><a id="2.1.9"></a></p>
+<h4 id="1-9-SQL操作"><a href="#1-9-SQL操作" class="headerlink" title="1.9 SQL操作"></a>1.9 SQL操作</h4><p><strong>1.9.1 【必须】SQL语句默认使用预编译并绑定变量</strong></p>
+<ul>
+<li><p>应使用预编译绑定变量的形式编写sql语句，保持查询语句和数据相分离</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad：拼接SQL语句查询，存在安全风险</span></span><br><span class="line"><span class="keyword">const</span> mysql  = <span class="built_in">require</span>(<span class="string">&quot;mysql&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> connection = mysql.<span class="title function_">createConnection</span>(options);</span><br><span class="line">connection.<span class="title function_">connect</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> sql = util.<span class="title function_">format</span>(<span class="string">&quot;SELECT * from some_table WHERE Id = %s and Name = %s&quot;</span>, req.<span class="property">body</span>.<span class="property">id</span>, req.<span class="property">body</span>.<span class="property">name</span>);</span><br><span class="line">connection.<span class="title function_">query</span>(sql, <span class="function">(<span class="params">err, result</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="comment">// handle err..</span></span><br><span class="line">&#125;);  </span><br><span class="line"></span><br><span class="line"><span class="comment">// good：使用预编译绑定变量构造SQL语句</span></span><br><span class="line"><span class="keyword">const</span> mysql  = <span class="built_in">require</span>(<span class="string">&quot;mysql&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> connection = mysql.<span class="title function_">createConnection</span>(options);</span><br><span class="line">connection.<span class="title function_">connect</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> sql = <span class="string">&quot;SELECT * from some_table WHERE Id = ? and Name = ?&quot;</span>;</span><br><span class="line"><span class="keyword">const</span> sqlParams = [req.<span class="property">body</span>.<span class="property">id</span>, req.<span class="property">body</span>.<span class="property">name</span>];</span><br><span class="line">connection.<span class="title function_">query</span>(sql, sqlParams, <span class="function">(<span class="params">err, result</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="comment">// handle err..</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对于表名、列名等无法进行预编译的场景，如：<code>__user_input__</code> 拼接到比如 <code>limit</code>, <code>order by</code>, <code>group by</code> , <code>from tablename</code>语句中。请使用以下方法：</p>
+<p><em>方案1：使用白名单校验表名&#x2F;列名</em></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// good</span></span><br><span class="line"><span class="keyword">const</span> tableSuffix = req.<span class="property">body</span>.<span class="property">type</span>;</span><br><span class="line"><span class="keyword">if</span> ([<span class="string">&quot;expected1&quot;</span>, <span class="string">&quot;expected2&quot;</span>].<span class="title function_">indexOf</span>(tableSuffix) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">	<span class="comment">// 不在表名白名单中，拒绝请求</span></span><br><span class="line">	<span class="keyword">return</span> ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> sql = <span class="string">`SELECT * from t_business_<span class="subst">$&#123;tableSuffix&#125;</span>`</span>;</span><br><span class="line">connection.<span class="title function_">query</span>(sql, <span class="function">(<span class="params">err, result</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="comment">// handle err..</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><em>方案2：使用反引号包裹表名&#x2F;列名，并过滤 <code>__user_input__</code> 中的反引号</em></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// good</span></span><br><span class="line"><span class="keyword">let</span> &#123; orderType &#125; = req.<span class="property">body</span>;</span><br><span class="line"><span class="comment">// 过滤掉__user_input__中的反引号</span></span><br><span class="line">orderType = orderType.<span class="title function_">replace</span>(<span class="string">&quot;`&quot;</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> sql = util.<span class="title function_">format</span>(<span class="string">&quot;SELECT * from t_business_feeds order by `%s`&quot;</span>, orderType);</span><br><span class="line">connection.<span class="title function_">query</span>(sql, <span class="function">(<span class="params">err, result</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="comment">// handle err..</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><em>方案3：将 <code>__user_input__</code> 转换为整数</em></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// good</span></span><br><span class="line"><span class="keyword">let</span> &#123; orderType &#125; = req.<span class="property">body</span>;</span><br><span class="line"><span class="comment">// 强制转换为整数</span></span><br><span class="line">orderType = <span class="built_in">parseInt</span>(orderType, <span class="number">10</span>);</span><br><span class="line"><span class="keyword">const</span> sql = <span class="string">`SELECT * from t_business_feeds order by <span class="subst">$&#123;orderType&#125;</span>`</span>;</span><br><span class="line">connection.<span class="title function_">query</span>(sql, <span class="function">(<span class="params">err, result</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="comment">// handle err..</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>1.9.2 【必须】安全的ORM操作</strong></p>
+<ul>
+<li><p>使用安全的ORM组件进行数据库操作。如 <code>sequelize</code> 等</p>
+</li>
+<li><p>禁止<code>__user_input__</code>以拼接的方式直接传入ORM的各类raw方法</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//bad: adonisjs ORM</span></span><br><span class="line"><span class="comment">//参考：https://adonisjs.com/docs/3.2/security-introduction#_sql_injection</span></span><br><span class="line"><span class="keyword">const</span> username = request.<span class="title function_">param</span>(<span class="string">&quot;username&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> users = <span class="keyword">yield</span> <span class="title class_">Database</span></span><br><span class="line">  .<span class="title function_">table</span>(<span class="string">&quot;users&quot;</span>)</span><br><span class="line">  .<span class="title function_">where</span>(<span class="title class_">Database</span>.<span class="title function_">raw</span>(<span class="string">`username = <span class="subst">$&#123;username&#125;</span>`</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">//good: adonisjs ORM</span></span><br><span class="line"><span class="keyword">const</span> username = request.<span class="title function_">param</span>(<span class="string">&quot;username&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> users = <span class="keyword">yield</span> <span class="title class_">Database</span></span><br><span class="line">  .<span class="title function_">table</span>(<span class="string">&#x27;users&#x27;</span>)</span><br><span class="line">  .<span class="title function_">where</span>(<span class="title class_">Database</span>.<span class="title function_">raw</span>(<span class="string">&quot;username = ?&quot;</span>, [username]));</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用ORM进行Update&#x2F;Insert操作时，应限制操作字段范围</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">good</span></span><br><span class="line"><span class="comment">假设该api用于插入用户的基本信息，使用传入的req.body通过Sequelize的create方法实现</span></span><br><span class="line"><span class="comment">假设User包含字段：username,email,isAdmin，</span></span><br><span class="line"><span class="comment">其中,isAdmin将会用于是否系统管理员的鉴权，默认值为false</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="comment">// Sequelize: 只允许变更username、email字段值</span></span><br><span class="line"><span class="title class_">User</span>.<span class="title function_">create</span>(req.<span class="property">body</span>, &#123; <span class="attr">fields</span>: [<span class="string">&quot;username&quot;</span>, <span class="string">&quot;email&quot;</span>] &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">user</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="comment">// handle the rest..</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>为什么要这么做？</strong><br>在上述案例中，若不限定fields值，攻击者将可传入<code>&#123;&quot;username&quot;:&quot;boo&quot;,&quot;email&quot;:&quot;foo@boo.com&quot;,&quot;isAdmin&quot;:true&#125;</code>将自己变为<code>Admin</code>，产生垂直越权漏洞。</p>
+</blockquote>
+<p><em>关联漏洞：高风险 - SQL注入，中风险 - Mass Assignment 逻辑漏洞</em></p>
+<p><a id="2.1.10"></a></p>
+<h4 id="1-10-NoSQL操作"><a href="#1-10-NoSQL操作" class="headerlink" title="1.10 NoSQL操作"></a>1.10 NoSQL操作</h4><p><strong>1.10.1 【必须】校验参数值类型</strong></p>
+<ul>
+<li>将HTTP参数值代入NoSQL操作前，应校验类型。如非功能需要，禁止对象（Object）类型传入。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad：执行NOSQL操作前，未作任何判断</span></span><br><span class="line">app.<span class="title function_">post</span>(<span class="string">&quot;/&quot;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">	db.<span class="property">users</span>.<span class="title function_">find</span>(&#123; <span class="attr">username</span>: req.<span class="property">body</span>.<span class="property">username</span>, <span class="attr">password</span>: req.<span class="property">body</span>.<span class="property">password</span> &#125;, <span class="function">(<span class="params">err, users</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="comment">// **<span class="doctag">TODO:</span>** handle the rest</span></span><br><span class="line">	&#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// good：在进入nosql前先判断`__USER_INPUT__`是否为字符串。</span></span><br><span class="line">app.<span class="title function_">post</span>(<span class="string">&quot;/&quot;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> (req.<span class="property">body</span>.<span class="property">username</span> &amp;&amp; <span class="keyword">typeof</span> req.<span class="property">body</span>.<span class="property">username</span> !== <span class="string">&quot;string&quot;</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;username must be a string&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (req.<span class="property">body</span>.<span class="property">password</span> &amp;&amp; <span class="keyword">typeof</span> req.<span class="property">body</span>.<span class="property">password</span> !== <span class="string">&quot;string&quot;</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;password must be a string&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	db.<span class="property">users</span>.<span class="title function_">find</span>(&#123; <span class="attr">username</span>: req.<span class="property">body</span>.<span class="property">username</span>, <span class="attr">password</span>: req.<span class="property">body</span>.<span class="property">password</span> &#125;, <span class="function">(<span class="params">err, users</span>) =&gt;</span> &#123;</span><br><span class="line">		<span class="comment">// **<span class="doctag">TODO:</span>** handle the rest</span></span><br><span class="line">	&#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>为什么要这么做？</strong></p>
+<p>JavaScript中，从http或socket接收的数据可能不是单纯的字符串，而是被黑客精心构造的对象(Object)。在本例中：</p>
+<ul>
+<li>期望接收的POST数据：<code>username=foo&amp;password=bar</code> </li>
+<li>期望的等价条件查询sql语句：<code>select * from users where username = &#39;foo&#39; and password = &#39;bar&#39;</code></li>
+<li>黑客的精心构造的攻击POST数据：<code>username[$ne]=null&amp;password[$ne]=null</code>或JSON格式：<code>&#123;&quot;username&quot;: &#123;&quot;$ne&quot;: null&#125;,&quot;password&quot;: &#123;&quot;$ne&quot;: null&#125;&#125;</code></li>
+<li>黑客篡改后的等价条件查询sql语句：<code>select * from users where username != null &amp; password != null</code></li>
+<li>黑客攻击结果：绕过正常逻辑，在不知道他人的username&#x2F;password的情况登录他人账号。</li>
+</ul>
+</blockquote>
+<p><strong>1.10.2 【必须】NoSQL操作前，应校验权限&#x2F;角色</strong></p>
+<ul>
+<li>执行NoSQL增、删、改、查逻辑前，应校验权限</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用express、mongodb(mongoose)实现的删除文章demo</span></span><br><span class="line"><span class="comment">// bad：在删除文章前未做权限校验</span></span><br><span class="line">app.<span class="title function_">post</span>(<span class="string">&quot;/deleteArticle&quot;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">	db.<span class="property">articles</span>.<span class="title function_">deleteOne</span>(&#123; <span class="attr">article_id</span>: req.<span class="property">body</span>.<span class="property">article_id</span> &#125;, <span class="function">(<span class="params">err, users</span>) =&gt;</span> &#123;</span><br><span class="line">		<span class="comment">// <span class="doctag">TODO:</span> handle the rest</span></span><br><span class="line">	&#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// good：进入nosql语句前先进行权限校验</span></span><br><span class="line">app.<span class="title function_">post</span>(<span class="string">&quot;/deleteArticle&quot;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="title function_">checkPriviledge</span>(ctx.<span class="property">uin</span>, req.<span class="property">body</span>.<span class="property">article_id</span>);</span><br><span class="line">	db.<span class="property">articles</span>.<span class="title function_">deleteOne</span>(&#123; <span class="attr">article_id</span>: req.<span class="property">body</span>.<span class="property">article_id</span> &#125;, <span class="function">(<span class="params">err, users</span>) =&gt;</span> &#123;</span><br><span class="line">		<span class="comment">// <span class="doctag">TODO:</span> handle the rest</span></span><br><span class="line">	&#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><em>关联漏洞：高风险 - 越权操作，高风险 - NoSQL注入</em></p>
+<p><a id="2.1.11"></a></p>
+<h4 id="1-11-服务器端渲染（SSR）"><a href="#1-11-服务器端渲染（SSR）" class="headerlink" title="1.11 服务器端渲染（SSR）"></a>1.11 服务器端渲染（SSR）</h4><p><strong>1.11.1 【必须】安全的Vue服务器端渲染(Vue SSR)</strong></p>
+<ul>
+<li><p>禁止直接将不受信的外部内容传入<code>&#123;&#123;&#123; data &#125;&#125;&#125;</code>表达式中</p>
+</li>
+<li><p>模板内容禁止被污染</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad: 将用户输入替换进模板</span></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">	<span class="attr">template</span>: appTemplate.<span class="title function_">replace</span>(<span class="string">&quot;word&quot;</span>, __USER_INPUT__),</span><br><span class="line">&#125;);</span><br><span class="line">renderer.<span class="title function_">renderToString</span>(app);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>对已渲染的HTML文本内容（renderToString后的html内容）。如需再拼不受信的外部输入，应先进行安全过滤，具体请参考<strong>1.6.3</strong></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad: 渲染后的html再拼接不受信的外部输入</span></span><br><span class="line"><span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>((<span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">	renderer.<span class="title function_">renderToString</span>(component, <span class="function">(<span class="params">err, html</span>) =&gt;</span> &#123;</span><br><span class="line">		<span class="keyword">let</span> htmlOutput = html;</span><br><span class="line">		htmlOutput += <span class="string">`<span class="subst">$&#123;__USER_INPUT__&#125;</span>`</span>;</span><br><span class="line">		<span class="title function_">resolve</span>(htmlOutput);</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
+
+<p><strong>1.11.2 【必须】安全地使用EJS、LoDash、UnderScore进行服务器端渲染</strong></p>
+<ul>
+<li><p>使用render函数时，模板内容禁止被污染</p>
+<p>lodash.Template:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad: 将用户输入送进模板</span></span><br><span class="line"><span class="keyword">const</span> compiled = _.<span class="title function_">template</span>(<span class="string">`&lt;b&gt;<span class="subst">$&#123;__USER_INPUT__&#125;</span>&lt;%- value %&gt;&lt;/b&gt;`</span>);</span><br><span class="line"><span class="title function_">compiled</span>(&#123; <span class="attr">value</span>: <span class="string">&quot;hello&quot;</span> &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>ejs:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad: 将用户输入送进模板</span></span><br><span class="line"><span class="keyword">const</span> ejs = <span class="built_in">require</span>(<span class="string">&quot;ejs&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> people = [<span class="string">&quot;geddy&quot;</span>, <span class="string">&quot;neil&quot;</span>, <span class="string">&quot;alex&quot;</span>];</span><br><span class="line"><span class="keyword">const</span> html = ejs.<span class="title function_">render</span>(<span class="string">`&lt;%= people.join(&quot;, &quot;); %&gt;<span class="subst">$&#123;__USER_INPUT__&#125;</span>`</span>, &#123; people &#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Ejs、LoDash、UnderScore提供的HTML插值模板默认形似<code>&lt;%= data %&gt;</code>，尽管在默认情况下<code>&lt;%= data %&gt;</code>存在过滤，在编写HTML插值模板时需注意:</p>
+<ol>
+<li>用户输入流入html属性值时，必须使用双引号包裹：<code>&lt;base data-id = &quot;&lt;%= __USER_INPUT__ %&gt;&quot;&gt;</code></li>
+<li>用户输入流入<code>&lt;script&gt;&lt;/script&gt;</code>标签或on*的html属性中时，如<code>&lt;script&gt;var id = &lt;%= __USER_INPUT__ %&gt;&lt;/script&gt;</code> ，须按照1.6.3中的做法或白名单方法进行过滤，框架&#x2F;组件的过滤在此处不起作用</li>
+</ol>
+</li>
+</ul>
+<p><strong>1.11.3 【必须】在自行实现状态存储容器并将其JSON.Stringify序列化后注入到HTML时，必须进行安全过滤</strong></p>
+<p><a id="2.1.12"></a></p>
+<h4 id="1-12-URL跳转"><a href="#1-12-URL跳转" class="headerlink" title="1.12 URL跳转"></a>1.12 URL跳转</h4><p><strong>1.12.1【必须】限定跳转目标地址</strong></p>
+<ul>
+<li>适用场景包括：</li>
+</ul>
+<ol>
+<li>使用30x返回码并在Header中设置Location进行跳转</li>
+<li>在返回页面中打印<code>&lt;script&gt;location.href=__Redirection_URL__&lt;/script&gt;</code></li>
+</ol>
+<ul>
+<li>使用白名单，限定重定向地址的协议前缀（默认只允许HTTP、HTTPS）、域名（默认只允许公司根域），或指定为固定值；</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用express实现的登录成功后的回调跳转页面</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// bad: 未校验页面重定向地址</span></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&quot;/login&quot;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="comment">// 若未登录用户访问其他页面，则让用户导向到该处理函数进行登录</span></span><br><span class="line">  <span class="comment">// 使用参数loginCallbackUrl记录先前尝试访问的url，在登录成功后跳转回loginCallbackUrl:</span></span><br><span class="line">	<span class="keyword">const</span> &#123; loginCallbackUrl &#125; = req.<span class="property">query</span>;</span><br><span class="line">	<span class="keyword">if</span> (loginCallbackUrl) &#123;</span><br><span class="line">    	res.<span class="title function_">redirect</span>(loginCallbackUrl);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// good: 白名单限定重定向地址</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">isValidURL</span>(<span class="params">sUrl</span>) &#123;</span><br><span class="line">	<span class="keyword">return</span> !!((<span class="regexp">/^(https?:\/\/)?[\w\-.]+\.(qq|tencent)\.com($|\/|\\)/i</span>).<span class="title function_">test</span>(sUrl) || (<span class="regexp">/^[\w][\w/.\-_%]+$/i</span>).<span class="title function_">test</span>(sUrl) || (<span class="regexp">/^[/\\][^/\\]/i</span>).<span class="title function_">test</span>(sUrl));</span><br><span class="line">&#125;</span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&quot;/login&quot;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="comment">// 若未登录用户访问其他页面，则让用户导向到该处理函数进行登录</span></span><br><span class="line">  <span class="comment">// 使用参数loginCallbackUrl记录先前尝试访问的url，在登录成功后跳转回loginCallbackUrl:</span></span><br><span class="line">	<span class="keyword">const</span> &#123; loginCallbackUrl &#125; = req.<span class="property">query</span>;</span><br><span class="line">	<span class="keyword">if</span> (loginCallbackUrl &amp;&amp; <span class="title function_">isValidUrl</span>(loginCallbackUrl)) &#123;</span><br><span class="line">    	res.<span class="title function_">redirect</span>(loginCallbackUrl);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// good: 白名单限定重定向地址，通过返回html实现</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">isValidURL</span>(<span class="params">sUrl</span>) &#123;</span><br><span class="line">	<span class="keyword">return</span> !!((<span class="regexp">/^(https?:\/\/)?[\w\-.]+\.(qq|tencent)\.com($|\/|\\)/i</span>).<span class="title function_">test</span>(sUrl) || (<span class="regexp">/^[\w][\w/.\-_%]+$/i</span>).<span class="title function_">test</span>(sUrl) || (<span class="regexp">/^[/\\][^/\\]/i</span>).<span class="title function_">test</span>(sUrl));</span><br><span class="line">&#125;</span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&quot;/login&quot;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="comment">// 若未登录用户访问其他页面，则让用户导向到该处理函数进行登录</span></span><br><span class="line">  <span class="comment">// 使用参数loginCallbackUrl记录先前尝试访问的url，在登录成功后跳转回loginCallbackUrl:</span></span><br><span class="line">	<span class="keyword">const</span> &#123; loginCallbackUrl &#125; = req.<span class="property">query</span>;</span><br><span class="line">	<span class="keyword">if</span> (loginCallbackUrl &amp;&amp; <span class="title function_">isValidUrl</span>(loginCallbackUrl)) &#123;</span><br><span class="line">		<span class="comment">// 使用encodeURI，过滤左右尖括号与双引号，防止逃逸出包裹的双引号</span></span><br><span class="line">		<span class="keyword">const</span> redirectHtml = <span class="string">`&lt;script&gt;location.href = &quot;<span class="subst">$&#123;<span class="built_in">encodeURI</span>(loginCallbackUrl)&#125;</span>&quot;;&lt;/script&gt;`</span>;</span><br><span class="line">    	res.<span class="title function_">end</span>(redirectHtml);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><em>关联漏洞：中风险 - 任意URL跳转漏洞</em></p>
+<p><a id="2.1.13"></a></p>
+<h4 id="1-13-Cookie与登录态"><a href="#1-13-Cookie与登录态" class="headerlink" title="1.13 Cookie与登录态"></a>1.13 Cookie与登录态</h4><p><strong>1.13.1【推荐】为Cookies中存储的关键登录态信息添加http-only保护</strong></p>
+<p><em>关联漏洞：纵深防护措施 - 安全性增强特性</em></p>
+<p><a id="2.2"></a></p>
+<h3 id="II-配置-amp-环境-1"><a href="#II-配置-amp-环境-1" class="headerlink" title="II. 配置&amp;环境"></a>II. 配置&amp;环境</h3><p><a id="2.2.1"></a></p>
+<h4 id="2-1-依赖库"><a href="#2-1-依赖库" class="headerlink" title="2.1 依赖库"></a>2.1 依赖库</h4><p><strong>2.1.1【必须】使用安全的依赖库</strong></p>
+<ul>
+<li>使用自动工具，检查依赖库是否存在后门&#x2F;漏洞，保持最新版本</li>
+</ul>
+<p><a id="2.2.2"></a></p>
+<h4 id="2-2-运行环境"><a href="#2-2-运行环境" class="headerlink" title="2.2 运行环境"></a>2.2 运行环境</h4><p><strong>2.2.1 【必须】使用非root用户运行Node.js</strong></p>
+<p><a id="2.2.3"></a></p>
+<h4 id="2-3-配置信息"><a href="#2-3-配置信息" class="headerlink" title="2.3 配置信息"></a>2.3 配置信息</h4><p><strong>2.3.1【必须】禁止硬编码认证凭证</strong></p>
+<ul>
+<li>禁止在源码中硬编码<code>AK/SK</code>、<code>数据库账密</code>、<code>私钥证书</code>等配置信息</li>
+<li>应使用配置系统或KMS密钥管理系统。</li>
+</ul>
+<p><strong>2.3.2【必须】禁止硬编码IP配置</strong></p>
+<ul>
+<li>禁止在源码中硬编码<code>IP</code>信息</li>
+</ul>
+<blockquote>
+<p><strong>为什么要这么做？</strong></p>
+<p>硬编码IP可能会导致后续机器裁撤或变更时产生额外的工作量，影响系统的可靠性。</p>
+</blockquote>
+<p><strong>2.3.3【必须】禁止硬编码员工敏感信息</strong></p>
+<ul>
+<li>禁止在源代码中含员工敏感信息，包括但不限于：<code>员工ID</code>、<code>手机号</code>、<code>微信/QQ号</code>等。</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://cxy127.online">Sweet</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://cxy127.online/2023/05/17/JavaScript%E5%AD%A6%E4%B9%A0/">http://cxy127.online/2023/05/17/JavaScript学习/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://cxy127.online" target="_blank">我的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Web%E5%89%8D%E7%AB%AF/">Web前端</a></div><div class="post_share"><div class="social-share" data-image="/img/default.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat-pay.png" target="_blank"><img class="post-qr-code-img" src="/img/loading.gif" data-original="/img/wechat-pay.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/face-pay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/loading.gif" data-original="/img/face-pay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/05/16/%E8%BE%85%E5%8A%A9%E5%AD%A6%E4%B9%A0%E5%B7%A5%E5%85%B7/"><img class="next-cover" src="/img/loading.gif" data-original="/img/default.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">辅助学习工具</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/12/18/HTML%E4%B8%8ECSS%E7%9F%A5%E8%AF%86/" title="HTML与CSS知识"><img class="cover" src="/img/loading.gif" data-original="/img/default.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-18</div><div class="title">HTML与CSS知识</div></div></a></div><div><a href="/2022/12/11/Web%E5%89%8D%E7%AB%AF-%E7%AC%AC%E4%B8%89%E7%AB%A0/" title="Web前端-第三章"><img class="cover" src="/img/loading.gif" data-original="/img/default.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-11</div><div class="title">Web前端-第三章</div></div></a></div><div><a href="/2022/12/11/Web%E5%89%8D%E7%AB%AF-%E7%AC%AC%E4%B8%80%E7%AB%A0/" title="Web前端-第一章"><img class="cover" src="/img/loading.gif" data-original="/img/default.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-11</div><div class="title">Web前端-第一章</div></div></a></div><div><a href="/2022/12/11/Web%E5%89%8D%E7%AB%AF-%E7%AC%AC%E4%BA%8C%E7%AB%A0/" title="Web前端-第二章"><img class="cover" src="/img/loading.gif" data-original="/img/default.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-11</div><div class="title">Web前端-第二章</div></div></a></div><div><a href="/2022/12/11/Web%E5%89%8D%E7%AB%AF-%E7%AC%AC%E4%BA%94%E7%AB%A0/" title="Web前端-第五章"><img class="cover" src="/img/loading.gif" data-original="/img/default.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-11</div><div class="title">Web前端-第五章</div></div></a></div><div><a href="/2022/12/11/Web%E5%89%8D%E7%AB%AF-%E7%AC%AC%E5%9B%9B%E7%AB%A0/" title="Web前端-第四章"><img class="cover" src="/img/loading.gif" data-original="/img/default.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-11</div><div class="title">Web前端-第四章</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/loading.gif" data-original="/img/people-image.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Sweet</div><div class="author-info__description">不怕念起，只怕觉迟</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/MuQingYuan"><i class="fab fa-github"></i><span>点击我</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/MuQingYuan" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:1776502593@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客！大家一起学习！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaScript%E9%A1%B5%E9%9D%A2%E7%B1%BB"><span class="toc-number">1.</span> <span class="toc-text">JavaScript页面类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#I-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.1.</span> <span class="toc-text">I. 代码实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-%E5%8E%9F%E7%94%9FDOM-API%E7%9A%84%E5%AE%89%E5%85%A8%E6%93%8D%E4%BD%9C"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 原生DOM API的安全操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-%E6%B5%81%E8%A1%8C%E6%A1%86%E6%9E%B6-x2F-%E5%BA%93%E7%9A%84%E5%AE%89%E5%85%A8%E6%93%8D%E4%BD%9C"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 流行框架&#x2F;库的安全操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-%E9%A1%B5%E9%9D%A2%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3 页面重定向</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-JSON%E8%A7%A3%E6%9E%90-x2F-%E5%8A%A8%E6%80%81%E6%89%A7%E8%A1%8C"><span class="toc-number">1.1.4.</span> <span class="toc-text">1.4 JSON解析&#x2F;动态执行</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-5-%E8%B7%A8%E5%9F%9F%E9%80%9A%E8%AE%AF"><span class="toc-number">1.1.5.</span> <span class="toc-text">1.5 跨域通讯</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#II-%E9%85%8D%E7%BD%AE-amp-%E7%8E%AF%E5%A2%83"><span class="toc-number">1.2.</span> <span class="toc-text">II. 配置&amp;环境</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-%E6%95%8F%E6%84%9F-x2F-%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 敏感&#x2F;配置信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-%E7%AC%AC%E4%B8%89%E6%96%B9%E7%BB%84%E4%BB%B6-x2F-%E8%B5%84%E6%BA%90"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 第三方组件&#x2F;资源</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-%E7%BA%B5%E6%B7%B1%E5%AE%89%E5%85%A8%E9%98%B2%E6%8A%A4"><span class="toc-number">1.2.3.</span> <span class="toc-text">2.3 纵深安全防护</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Node-js%E5%90%8E%E5%8F%B0%E7%B1%BB"><span class="toc-number">2.</span> <span class="toc-text">Node.js后台类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#I-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0-1"><span class="toc-number">2.1.</span> <span class="toc-text">I. 代码实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-%E8%BE%93%E5%85%A5%E9%AA%8C%E8%AF%81"><span class="toc-number">2.1.1.</span> <span class="toc-text">1.1 输入验证</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4"><span class="toc-number">2.1.2.</span> <span class="toc-text">1.2 执行命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C"><span class="toc-number">2.1.3.</span> <span class="toc-text">1.3 文件操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82"><span class="toc-number">2.1.4.</span> <span class="toc-text">1.4 网络请求</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-5-%E6%95%B0%E6%8D%AE%E8%BE%93%E5%87%BA"><span class="toc-number">2.1.5.</span> <span class="toc-text">1.5 数据输出</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-6-%E5%93%8D%E5%BA%94%E8%BE%93%E5%87%BA"><span class="toc-number">2.1.6.</span> <span class="toc-text">1.6 响应输出</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-7-%E6%89%A7%E8%A1%8C%E4%BB%A3%E7%A0%81"><span class="toc-number">2.1.7.</span> <span class="toc-text">1.7 执行代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-8-Web%E8%B7%A8%E5%9F%9F"><span class="toc-number">2.1.8.</span> <span class="toc-text">1.8 Web跨域</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-9-SQL%E6%93%8D%E4%BD%9C"><span class="toc-number">2.1.9.</span> <span class="toc-text">1.9 SQL操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-10-NoSQL%E6%93%8D%E4%BD%9C"><span class="toc-number">2.1.10.</span> <span class="toc-text">1.10 NoSQL操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-11-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E6%B8%B2%E6%9F%93%EF%BC%88SSR%EF%BC%89"><span class="toc-number">2.1.11.</span> <span class="toc-text">1.11 服务器端渲染（SSR）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-12-URL%E8%B7%B3%E8%BD%AC"><span class="toc-number">2.1.12.</span> <span class="toc-text">1.12 URL跳转</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-13-Cookie%E4%B8%8E%E7%99%BB%E5%BD%95%E6%80%81"><span class="toc-number">2.1.13.</span> <span class="toc-text">1.13 Cookie与登录态</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#II-%E9%85%8D%E7%BD%AE-amp-%E7%8E%AF%E5%A2%83-1"><span class="toc-number">2.2.</span> <span class="toc-text">II. 配置&amp;环境</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-%E4%BE%9D%E8%B5%96%E5%BA%93"><span class="toc-number">2.2.1.</span> <span class="toc-text">2.1 依赖库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83"><span class="toc-number">2.2.2.</span> <span class="toc-text">2.2 运行环境</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF"><span class="toc-number">2.2.3.</span> <span class="toc-text">2.3 配置信息</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/05/17/JavaScript%E5%AD%A6%E4%B9%A0/" title="JavaScript学习"><img src="/img/loading.gif" data-original="/img/default.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaScript学习"/></a><div class="content"><a class="title" href="/2023/05/17/JavaScript%E5%AD%A6%E4%B9%A0/" title="JavaScript学习">JavaScript学习</a><time datetime="2023-05-17T12:40:53.000Z" title="发表于 2023-05-17 20:40:53">2023-05-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/05/16/%E8%BE%85%E5%8A%A9%E5%AD%A6%E4%B9%A0%E5%B7%A5%E5%85%B7/" title="辅助学习工具"><img src="/img/loading.gif" data-original="/img/default.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="辅助学习工具"/></a><div class="content"><a class="title" href="/2023/05/16/%E8%BE%85%E5%8A%A9%E5%AD%A6%E4%B9%A0%E5%B7%A5%E5%85%B7/" title="辅助学习工具">辅助学习工具</a><time datetime="2023-05-16T01:26:01.000Z" title="发表于 2023-05-16 09:26:01">2023-05-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/05/15/git%E5%AD%A6%E4%B9%A0/" title="git学习"><img src="/img/loading.gif" data-original="/img/default.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="git学习"/></a><div class="content"><a class="title" href="/2023/05/15/git%E5%AD%A6%E4%B9%A0/" title="git学习">git学习</a><time datetime="2023-05-15T11:38:11.000Z" title="发表于 2023-05-15 19:38:11">2023-05-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/05/14/%E5%8D%9A%E5%AE%A2%E7%9C%8B%E6%9D%BF%E5%A8%98%E9%85%8D%E7%BD%AE/" title="博客看板娘配置"><img src="/img/loading.gif" data-original="/img/default.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="博客看板娘配置"/></a><div class="content"><a class="title" href="/2023/05/14/%E5%8D%9A%E5%AE%A2%E7%9C%8B%E6%9D%BF%E5%A8%98%E9%85%8D%E7%BD%AE/" title="博客看板娘配置">博客看板娘配置</a><time datetime="2023-05-14T02:41:11.000Z" title="发表于 2023-05-14 10:41:11">2023-05-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/05/13/git%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" title="git基本操作"><img src="/img/loading.gif" data-original="/img/default.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="git基本操作"/></a><div class="content"><a class="title" href="/2023/05/13/git%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" title="git基本操作">git基本操作</a><time datetime="2023-05-13T13:31:30.000Z" title="发表于 2023-05-13 21:31:30">2023-05-13</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2023 By Sweet</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text"><span>欢迎来到我的小窝！</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>(() => {
+  const $mermaidWrap = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaidWrap.length) {
+    window.runMermaid = () => {
+      window.loadMermaid = true
+      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+      Array.from($mermaidWrap).forEach((item, index) => {
+        const mermaidSrc = item.firstElementChild
+        const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+        const mermaidID = 'mermaid-' + index
+        const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+        mermaid.mermaidAPI.render(mermaidID, mermaidDefinition, (svgCode) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svgCode)
+        })
+      })
+    }
+
+    const loadMermaid = () => {
+      window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaid)
+    }
+
+    window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+  }
+})()</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.8" zIndex="-1" count="99" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":150,"height":250,"hOffset":30,"vOffset":-5},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script>
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,c=a();function a(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=a());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function i(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",i),r.addEventListener("resize",i),r.addEventListener("orientationchange",i)}(this);</script></body></html>
